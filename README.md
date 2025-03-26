@@ -1,0 +1,1 @@
+# Ak-ll-Etkinlik-Planlama-Platformu
