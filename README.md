@@ -29,6 +29,8 @@ Proje; **API entegrasyonları, harita ve rota planlama** özellikleriyle kullan�
 
 ---
 
+
+
 ## 🛠️ Kullanılan Teknolojiler
 - **Backend**: [Django](https://www.djangoproject.com/) (Python)  
 - **Frontend**: HTML, CSS, JavaScript  
@@ -45,6 +47,15 @@ Proje; **API entegrasyonları, harita ve rota planlama** özellikleriyle kullan�
 5. **Mesajlaşma Sistemi** – Etkinlik bazlı sohbet odaları  
 6. **Oyunlaştırma** – Katılım puanları  
 7. **Admin Paneli** – Yönetici kontrolü  
+
+---
+
+## 📂 Veritabanı Yapısı
+- **Kullanıcılar**: Kullanıcı adı, şifre, e-posta, profil bilgileri  
+- **Etkinlikler**: İsim, açıklama, tarih, saat, konum  
+- **Katılımcılar**: Kullanıcıların etkinliklerle ilişkisi  
+- **Mesajlar**: Sohbet içerikleri  
+- **Puanlar**: Oyunlaştırma için kullanıcı puanları  
 
 
 ---
@@ -77,17 +88,11 @@ python manage.py runserver
 
 
 
----
-
-## 📂 Veritabanı Yapısı
-- **Kullanıcılar**: Kullanıcı adı, şifre, e-posta, profil bilgileri  
-- **Etkinlikler**: İsim, açıklama, tarih, saat, konum  
-- **Katılımcılar**: Kullanıcıların etkinliklerle ilişkisi  
-- **Mesajlar**: Sohbet içerikleri  
-- **Puanlar**: Oyunlaştırma için kullanıcı puanları  
 
 
 
-## 🎥 Demo Video
+<video width="600" controls>
+  <source src="https://github.com/zeynepplbyk/Smart-Event-Planning-Platform-Akilli-Etkinlik-Planlama-Platformu/raw/main/kurulum.mp4" type="video/mp4">
+  Tarayıcınız video oynatmayı desteklemiyor.
+</video>
 
-![Kurulum ve Çalıştırma](https://github.com/user-attachments/assets/ac2c31a4-9f09-46e4-b164-a26f52c8ae73)
