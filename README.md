@@ -79,9 +79,12 @@ python manage.py migrate
 
 # Sunucuyu çalıştır
 python manage.py runserver
----
+----
 
-## 📸 
+
+
+
+
 
 https://github.com/user-attachments/assets/f22b4be7-3148-4fec-912a-81ee973a9075
 
