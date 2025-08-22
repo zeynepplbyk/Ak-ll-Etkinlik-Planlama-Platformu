@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etkinlik Oluştur</title>
+    {% load static %}
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6Dv2jQqVPHXNSrdd2Tuh52S2Wpqsb3ec&libraries=places"></script>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+        .message {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px;
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+            font-size: 16px;
+            z-index: 1000;
+            display: none; /* Başlangıçta gizli */
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="margin-bottom: 20px;">
+            <button onclick="window.location.href='{% url 'anasayfa' %}'" 
+                style="align-items: center; gap: 10px; padding: 10px 5px; cursor: pointer;"> 
+                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0a8 8 0 1 0 8 8A8 8 0 0 0 8 0ZM6.354 5.646a.5.5 0 0 1 0 .708L4.707 8l1.647 1.646a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2a.5.5 0 0 1 .708 0ZM10 8a.5.5 0 0 1-.5.5H5.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 .5.5Z"/>
+                </svg> 
+            </button>
+        </div>
+        <h1>Etkinlik Oluştur</h1>
+
+        <!-- Bildiri alanı -->
+        <div id="message-container" class="message"></div>
+
+        <form id="etkinlik-form" action="{% url 'etkinlik_olustur' %}" method="POST">
+            {% csrf_token %}
+            <label for="etkinlik_adi">Etkinlik Adı:</label>
+            <input type="text" id="etkinlik_adi" name="etkinlik_adi" required>
+        
+            <label for="aciklama">Açıklama:</label>
+            <textarea id="aciklama" name="aciklama" required></textarea>
+        
+            <label for="tarih">Tarih:</label>
+            <input type="date" id="tarih" name="tarih" required>
+        
+            <label for="saat">Saat:</label>
+            <input type="time" id="saat" name="saat" required>
+        
+            <label for="sure">Süre (Dakika cinsinden):</label>
+            <input type="number" id="sure" name="sure" required>
+        
+            <label for="kategori">Kategori:</label>
+            <select id="kategori" name="kategori" class="select2" required>
+                <option value="spor">Spor</option>
+                <option value="muzik">Müzik</option>
+                <option value="resim">Resim</option>
+                <option value="tiyatro">Tiyatro</option>
+                <option value="sinema">Sinema</option>
+                <option value="dans">Dans</option>
+                <option value="edebiyat">Edebiyat</option>
+                <option value="yemek">Yemek</option>
+                <option value="teknoloji">Teknoloji</option>
+                <option value="seminer">Seminer</option>
+                <option value="konser">Konser</option>
+                <option value="festivaller">Festivaller</option>
+                <option value="konferans">Konferans</option>
+            </select>
+        
+            <label for="konum">Konum (Adres ya da Koordinatlar):</label>
+            <input type="text" id="konum" name="konum" required readonly>
+        
+            <div id="map"></div>
+        
+            <button type="submit">Etkinlik Oluştur</button>
+        </form>
+    </div>
+
+    <script>
+        let map, marker;
+
+        function initMap() {
+            const initialLocation = { lat: 41.0082, lng: 28.9784 }; // İstanbul başlangıç konumu
+
+            map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 12,
+                center: initialLocation,
+            });
+
+            marker = new google.maps.Marker({
+                position: initialLocation,
+                map: map,
+                draggable: true,
+            });
+
+            const input = document.getElementById("konum");
+            const autocomplete = new google.maps.places.Autocomplete(input);
+            autocomplete.bindTo("bounds", map);
+
+            google.maps.event.addListener(autocomplete, "place_changed", function() {
+                const place = autocomplete.getPlace();
+                if (!place.geometry) return;
+
+                map.setCenter(place.geometry.location);
+                marker.setPosition(place.geometry.location);
+
+                // Adres bilgisini input'a ekle
+                document.getElementById("konum").value = place.formatted_address;
+            });
+
+            google.maps.event.addListener(marker, "dragend", function() {
+                const latLng = marker.getPosition();
+                document.getElementById("konum").value = latLng.lat() + ", " + latLng.lng();
+            });
+        }
+
+        google.maps.event.addDomListener(window, "load", initMap);
+
+        // Etkinlik formunun AJAX ile gönderilmesi
+        $('#etkinlik-form').submit(function(event) {
+            event.preventDefault(); // Formun normal şekilde gönderilmesini engelle
+
+            var formData = $(this).serialize(); // Form verilerini al
+
+            $.ajax({
+                url: "{% url 'etkinlik_olustur' %}",
+                type: "POST",
+                data: formData,
+                success: function(response) {
+                    if(response.success) {
+                        showMessage('success', response.message);
+                    } else {
+                        showMessage('error', response.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    showMessage('error', "Bir hata oluştu.");
+                }
+            });
+        });
+
+        // Bildiri gösterme fonksiyonu
+        function showMessage(type, message) {
+            var messageContainer = $('#message-container');
+            messageContainer.removeClass('success error').addClass(type).text(message);
+            messageContainer.fadeIn(500).delay(3000).fadeOut(500);
+        }
+    </script>
+    
+
+
+   
+</script>
+</body>
+</html>

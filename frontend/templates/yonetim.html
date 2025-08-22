@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Yönetim Paneli</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 30px;
+            color: #333;
+            font-size: 32px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        button {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #c0392b;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+        }
+
+        .action-buttons form {
+            display: inline-block;
+            margin: 0 5px;
+        }
+
+        .action-buttons button {
+            margin: 0;
+        }
+
+        .request-row {
+            background-color: #f7f7f7;
+        }
+    </style>
+</head>
+<body>
+    <div style="margin-bottom: 20px;">
+        <button onclick="window.location.href='{% url 'anasayfa' %}'" 
+            style="align-items: center; gap: 10px; padding: 10px 5px; cursor: pointer;"> 
+            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 0a8 8 0 1 0 8 8A8 8 0 0 0 8 0ZM6.354 5.646a.5.5 0 0 1 0 .708L4.707 8l1.647 1.646a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2a.5.5 0 0 1 .708 0ZM10 8a.5.5 0 0 1-.5.5H5.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 .5.5Z"/>
+            </svg> 
+        </button>
+    </div>
+
+    <div class="container">
+        <h1>Admin Yönetim Paneli</h1>
+        
+        <h2>Onay Bekleyen Etkinlik Talepleri</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Etkinlik Adı</th>
+                    <th>Açıklama</th>
+                    <th>Tarih</th>
+                    <th>Saat</th>
+                    <th>Kategori</th>
+                    <th>Konum</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if etkinlik_istek %}
+                    {% for etkinlik in etkinlik_istek %}
+                        <tr>
+                            <td>{{ etkinlik.kullanici_id }}</td>
+                            <td>{{ etkinlik.etkinlik_adi }}</td>
+                            <td>{{ etkinlik.aciklama }}</td>
+                            <td>{{ etkinlik.tarih }}</td>
+                            <td>{{ etkinlik.saat }}</td>
+                            <td>{{ etkinlik.kategori }}</td>
+                            <td>{{ etkinlik.konum }}</td>
+                            <td>
+                                <form method="post" action="{% url 'etkinlik_onayla' etkinlik.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" onclick="return confirm('Bu etkinliği onaylamak istediğinizden emin misiniz?')">Onayla</button>
+                                </form>
+
+                                <form method="get" action="{% url 'etkinlik_duzenle' etkinlik.id %}">
+                                    <button type="submit">Düzenle</button>
+                                </form>
+
+                                
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="9">Henüz onay bekleyen etkinlik yok.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+        
+
+        <h2>Kullanıcılar</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Kullanıcı Adı</th>
+                    <th>Email</th>
+                    <th>Ad</th>
+                    <th>Soyad</th>
+                    <th>Kayıt Tarihi</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for kullanici in kullanicilar %}
+                    <tr>
+                        <td>{{ kullanici.id }}</td>
+                        <td>{{ kullanici.kullanici_adi }}</td>
+                        <td>{{ kullanici.email }}</td>
+                        <td>{{ kullanici.ad }}</td>
+                        <td>{{ kullanici.soyad }}</td>
+                        <td>{{ kullanici.date_joined|date:"d-m-Y H:i" }}</td>
+                        <td class="action-buttons">
+                            <!-- Silme formu -->
+                            <form method="post" action="{% url 'kullanici_sil' kullanici.id %}">
+                                {% csrf_token %}
+                                <button type="submit" onclick="return confirm('Bu kullanıcıyı silmek istediğinize emin misiniz?')">Sil</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etkinlikler</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAB2jTqmpyEDmEPSr_dI94HLwuKrknveSE&libraries=places"></script>
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+            margin-top: 30px;  /* Harita ile etkinlik listesi arasına boşluk ekleyebilirsiniz */
+        }
+    </style>
+</head>
+<body>
+    <h1>Etkinlikler</h1>
+    <a href="{% url 'etkinliklustur' %}">Yeni Etkinlik Oluştur</a>
+
+    <!-- Etkinlikler listesi -->
+    <ul>
+        {% for etkinlik in etkinlikler %}
+            <li>
+                <h3>{{ etkinlik.etkinlik_adi }}</h3>
+                <p>{{ etkinlik.aciklama }}</p>
+                <p>{{ etkinlik.tarih }} - {{ etkinlik.saat }}</p>
+                <p>Konum: {{ etkinlik.konum }}</p>
+                <p>Kategori: {{ etkinlik.kategori }}</p>
+                <a href="{% url 'etkinlik_katil' etkinlik.id %}">Etkinliğe Katıl</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <!-- Harita -->
+    <div id="map"></div>
+
+    <script>
+        function initMap() {
+            var mapOptions = {
+                center: {lat: 41.0082, lng: 28.9784},  // İstanbul başlangıç koordinatları
+                zoom: 12
+            };
+            var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+            // Etkinliklerin konumlarını haritada gösterme
+            {% for etkinlik in etkinlikler %}
+            var marker = new google.maps.Marker({
+                position: {lat: {{ etkinlik.konum_latitude }}, lng: {{ etkinlik.konum_longitude }}},
+                map: map,
+                title: "{{ etkinlik.etkinlik_adi }}"
+            });
+            {% endfor %}
+        }
+
+        // Harita yüklendiğinde başlat
+        google.maps.event.addDomListener(window, 'load', initMap);
+    </script>
+</body>
+</html>

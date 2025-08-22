@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Katıldığınız Etkinlikler</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        /* Genel sayfa düzeni */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+
+        /* Etkinlik listeleme düzeni */
+        .event-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .event-item {
+            background-color: rgba(255, 255, 255, 0.8); /* Şeffaf beyaz arka plan */
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .event-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .event-item strong {
+            font-size: 18px;
+            color: #333;
+        }
+
+        .event-item p {
+            margin: 8px 0;
+            color: #555;
+        }
+
+        .event-item .date-time {
+            font-size: 14px;
+            color: #777;
+        }
+
+        .event-item .location {
+            font-size: 14px;
+            color: #888;
+        }
+
+        /* "Henüz katılmadığınız etkinlik yok" mesajı */
+        .no-events-message {
+            text-align: center;
+            font-size: 18px;
+            color: #888;
+        }
+        .mesajlara-git {
+            font-size: 1.2rem; /* Daha küçük yazı boyutu */
+            font-weight: bold; /* Kalın yazı */
+            text-align: center; /* Ortala */
+            margin-top: 10px; /* Üst boşluk */
+            padding: 6px 12px; /* Daha küçük iç boşluk */
+            border-radius: 8px; /* Köşeleri yuvarla */
+            background: linear-gradient(45deg, #ff6b6b, #f7b7a3, #f7c8ff, #7bdff2); /* Pastel gradient */
+            background-size: 20% 20%; /* Gradient animasyonu için genişletme */
+            animation: gradientAnimation 8s ease infinite; /* Gradient animasyonu */
+            color: #ffffff; /* Siyah metin */
+            text-decoration: none; /* Alt çizgiyi kaldır */
+            display: inline-block; /* Buton gibi görünmesi için */
+            cursor: pointer; /* El simgesi */
+            transition: transform 0.2s, box-shadow 0.2s; /* Hover efekt animasyonu */
+        }
+        
+        .mesajlara-git:hover {
+            transform: scale(1.05); /* Hover sırasında büyüt */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Hover sırasında gölgeyi artır */
+        }
+        
+        /* Gradient animasyonu */
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        
+    </style>
+</head>
+<body>
+    <div class="container">   
+        <div style="margin-bottom: 20px;">
+            <button onclick="window.location.href='{% url 'anasayfa' %}'" 
+                style="align-items: center;  gap: 10px; padding: 10px 5px; cursor: pointer;"> 
+                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0a8 8 0 1 0 8 8A8 8 0 0 0 8 0ZM6.354 5.646a.5.5 0 0 1 0 .708L4.707 8l1.647 1.646a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2a.5.5 0 0 1 .708 0ZM10 8a.5.5 0 0 1-.5.5H5.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 .5.5Z"/>
+                </svg> 
+                
+            </button>
+        </div>
+        <h1>Katıldığınız Etkinlikler</h1>
+        
+        {% if etkinlikler %}
+            <ul class="event-list">
+                {% for etkinlik in etkinlikler %}
+                    <li class="event-item">
+                        <strong>{{ etkinlik.etkinlik_adi }}</strong><br>
+                        <p><strong>Kategori:</strong> {{ etkinlik.get_kategori_display }}</p>
+
+                        <p>{{ etkinlik.aciklama }}</p>
+                        <p class="date-time"><strong>Tarih:</strong> {{ etkinlik.tarih|date:"d M Y" }} | <strong>Saat:</strong> {{ etkinlik.saat|time:"H:i" }}</p>
+                        <p class="location"><strong>Konum:</strong> {{ etkinlik.konum }}</p>
+                        <a href="{% url 'mesajlar' etkinlik_id=etkinlik.id %}" class="mesajlara-git">Mesajlara Git</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="no-events-message">Henüz katıldığınız etkinlik yok.</p>
+        {% endif %}
+    </div>
+    
+</body>
+</html>

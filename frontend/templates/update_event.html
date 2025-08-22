@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ana Sayfa</title>
+    {% load static %}
+    
+    <!-- CSS dosyasını yükle -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    
+    <!-- Font Awesome için link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+  <!-- Geri Gitme Butonu -->
+  <div style="margin-bottom: 20px;">
+    <button onclick="window.location.href='{% url 'anasayfa' %}'" 
+        style="align-items: center; gap: 10px; padding: 10px 5px; cursor: pointer; border: none; background-color: transparent;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 0a8 8 0 1 0 8 8A8 8 0 0 0 8 0ZM6.354 5.646a.5.5 0 0 1 0 .708L4.707 8l1.647 1.646a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2a.5.5 0 0 1 .708 0ZM10 8a.5.5 0 0 1-.5.5H5.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 .5.5Z"/>
+        </svg> 
+    </button>
+  </div>
+
+  <!-- Etkinlik Güncelleme Formu -->
+  <form method="POST">
+    {% csrf_token %}
+    <label for="etkinlik_adi">Etkinlik Adı:</label>
+    <input type="text" name="etkinlik_adi" value="{{ etkinlik.etkinlik_adi }}" required>
+
+    <label for="aciklama">Açıklama:</label>
+    <textarea name="aciklama" required>{{ etkinlik.aciklama }}</textarea>
+
+    <label for="tarih">Tarih:</label>
+    <input type="date" name="tarih" value="{{ etkinlik.tarih }}" required>
+
+    <label for="saat">Saat:</label>
+    <input type="time" name="saat" value="{{ etkinlik.saat }}" required>
+
+    <label for="konum">Konum:</label>
+    <input type="text" name="konum" value="{{ etkinlik.konum }}" required>
+
+    <button type="submit">Güncelle</button>
+  </form>
+
+</body>
+</html>

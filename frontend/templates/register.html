@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kayıt Ol</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2>Kullanıcı Kaydı</h2>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <!-- Kullanıcı Adı -->
+            <div>
+                <label for="kullanici_adi">Kullanıcı Adı:</label>
+                <input type="text" name="kullanici_adi" required>
+            </div>
+
+            <!-- Ad Soyad -->
+            <div>
+                <label for="ad">Ad:</label>
+                <input type="text" name="ad" required>
+            </div>
+            <div>
+                <label for="soyad">Soyad:</label>
+                <input type="text" name="soyad" required>
+            </div>
+
+            <!-- Diğer Bilgiler -->
+            <div>
+                <label for="email">E-posta:</label>
+                <input type="email" name="email" required>
+            </div>
+            <div>
+                <label for="konum">Konum:</label>
+                <input type="text" name="konum" required>
+            </div>
+            <div>
+                <label for="ilgi_alanlari">İlgi Alanları:</label>
+                <textarea name="ilgi_alanlari" required></textarea>
+            </div>
+            <div>
+                <label for="dogum_tarihi">Doğum Tarihi:</label>
+                <input type="date" name="dogum_tarihi" required>
+            </div>
+            
+            <!-- Cinsiyet -->
+            <div class="cinsiyet-container">
+                <label for="cinsiyet">Cinsiyet:</label>
+                <div class="radio-group">
+                    <label>
+                        <input type="radio" name="cinsiyet" value="Erkek" required>
+                        <span>Erkek</span>
+                    </label>
+                    <label>
+                        <input type="radio" name="cinsiyet" value="Kadın" required>
+                        <span>Kadın</span>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Telefon -->
+            <div>
+                <label for="telefon_no">Telefon Numarası:</label>
+                <input type="tel" name="telefon_no" required>
+            </div>
+
+            <!-- Profil Fotoğrafı -->
+            <div class="profil-fotografi-container">
+                <label for="profil_fotografi">Profil Fotoğrafı:</label>
+                <input type="file" name="profil_fotografi" accept="image/*">
+            </div>
+
+            <!-- Şifre -->
+            <div>
+                <label for="sifre">Şifre:</label>
+                <input type="password" name="sifre" required>
+            </div>
+
+            <button type="submit">Kayıt Ol</button>
+        </form>
+
+        <p>Zaten hesabın var mı? <a href="{% url 'kullanici_giris' %}">Giriş Yap</a></p>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>

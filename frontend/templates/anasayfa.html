@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ana Sayfa</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+   
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, #ff6b6b, #f7b7a3, #f7c8ff, #7bdff2);
+            background-size: 400% 400%;
+            animation: gradientAnimation 8s ease infinite;
+        
+        }
+        /* Arka Plan Animasyonu */
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+/* Navbar düzeni */
+.navbar {
+    display: flex;
+    justify-content: space-between; /* Butonları eşit aralıklı yerleştir */
+    width: 100%;
+    margin-top: 10px; /* Üstten biraz boşluk */
+}
+
+/* Navbar butonları */
+.navbar button {
+    width: 32%; /* Her bir buton %32 genişliğinde olacak (3 buton için eşit paylaşım) */
+    padding: 12px 20px;
+    background: linear-gradient(45deg, #ff6b6b, #f7b7a3, #f7c8ff, #7bdff2);
+    background-size: 400% 400%;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    animation: gradientAnimation 8s ease infinite;
+    opacity: 0.8; /* Şeffaflık */
+    text-align: center; /* Buton metnini ortala */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Butonlara hafif gölge */
+}
+
+/* "Nasıl Giderim?" Butonları için Stil */
+a.directions-button {
+    width: 77%; /* Butonun genişliğini azalt */
+    padding: 8px; /* Yüksekliği kısalt */
+    background: linear-gradient(45deg, #ff6b6b, #f7b7a3, #f7c8ff, #7bdff2);
+    background-size: 400% 400%;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    text-align: center; /* Yazıyı ortala */
+    text-decoration: none; /* Alt çizgiyi kaldır */
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+    animation: gradientAnimation 8s ease infinite;
+    margin: 10px auto; /* Ortalamak için */
+    display: block; /* Blok yaparak ortalamayı sağla */
+}
+
+/* Hover Efekti */
+a.directions-button:hover {
+    background-color: #218838;
+}
+
+/* Navbar butonu hover efekti */
+.navbar button:hover {
+    background-position: 100% 50%; /* Hover sırasında gradientin yerini değiştir */
+    transform: scale(1.05); /* Butonu büyüt */
+    opacity: 1; /* Hoverda şeffaflık kalkar */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Hoverda gölgeyi belirginleştir */
+}
+
+/* Mobile uyumluluk için */
+@media (max-width: 768px) {
+    .navbar button {
+        width: 48%; /* Mobilde butonlar biraz daha geniş olmalı */
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar button {
+        width: 100%; /* Çok küçük ekranlarda butonlar tam genişlik alır */
+    }
+}
+
+
+
+        /* Flex düzeni */
+        .main-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 60px; /* Butonlar için üstte yer bırak */
+        }
+
+        /* Sol taraftaki harita */
+        .map-container {
+            width: 50%;
+            height: 500px;
+        }
+
+        /* Sağ taraftaki etkinlik kartları */
+        .events-container {
+            width: 45%;
+            padding: 20px;
+            overflow-y: auto;
+            max-height: 80vh; /* Etkinlik kartları için maksimum yükseklik */
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
+        /* Etkinlik kartları */
+        .event-card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: rgba(249, 249, 249, 0.6); /* Şeffaf beyaz arka plan */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15); /* Hafif gölge */
+            transition: transform 0.2s, box-shadow 0.2s; /* Gölge animasyonu */
+        }
+        
+        /* Hover efekti */
+        .event-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Hover sırasında daha belirgin gölge */
+        }
+        
+        /* Başlık için stil */
+        .event-card h3 {
+            margin-top: 0;
+        }
+        
+        /* Paragraflar için stil */
+        .event-card p {
+            margin: 5px 0;
+        }
+        
+        /* Sil butonları için stil */
+        button.delete-button {
+            width: 80%; /* Butonun genişliğini azalt */
+            padding: 8px; /* Yüksekliği kısalt */
+            background: linear-gradient(45deg, #ff6b6b, #f7b7a3, #f7c8ff, #7bdff2);
+            background-size: 400% 400%;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+            animation: gradientAnimation 8s ease infinite;
+            margin: 10px auto; /* Ortalamak için */
+            display: block; /* Butonları blok yaparak ortalamayı sağla */
+        }
+        
+        /* Sil butonu hover efekti */
+        button.delete-button:hover {
+            background-position: 100% 50%;
+            transform: scale(1.05);
+        }
+        
+        /* Güncelle butonları için stil */
+        button.update-button {
+            width: 80%; /* Butonun genişliğini azalt */
+            padding: 8px; /* Yüksekliği kısalt */
+            background: linear-gradient(45deg, #ff6b6b, #f7b7a3, #f7c8ff, #7bdff2);
+            background-size: 400% 400%;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+            animation: gradientAnimation 8s ease infinite;
+            margin: 10px auto; /* Ortalamak için */
+            display: block; /* Butonları blok yaparak ortalamayı sağla */
+        }
+        
+        /* Güncelle butonu hover efekti */
+        button.update-button:hover {
+            background-position: 100% 50%;
+            transform: scale(1.05);
+        }
+        
+        /* Katıl butonunu ekleyelim */
+        button.join-button {
+            width: 80%; /* Butonun genişliğini azalt */
+            padding: 8px; /* Yüksekliği kısalt */
+            background: linear-gradient(45deg, #ff6b6b, #f7b7a3, #f7c8ff, #7bdff2);
+            background-size: 400% 400%;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+            animation: gradientAnimation 8s ease infinite;
+            margin: 10px auto; /* Ortalamak için */
+            display: block; /* Butonları blok yaparak ortalamayı sağla */
+        }
+        
+        button.join-button:hover {
+            background-color: #218838;
+        }
+
+        .navbar .logout-button {
+            width: 10%; /* Diğer butonlara göre daha küçük */
+            padding: 8px 16px; /* Yükseklik ve genişlik ayarı */
+            background: linear-gradient(45deg, #ff6b6b, #f7b7a3, #f7c8ff, #7bdff2);
+            background-size: 400% 400%;
+            border: none;
+            border-radius: 50px; /* Şekilli ve yuvarlak köşe */
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            transform: rotate(180deg); /* Simgenin yönünü 180 derece döndür */
+         transition: transform 0.3s ease; /* Yumuşak geçiş efekti */
+            transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            animation: gradientAnimation 8s ease infinite;
+            opacity: 0.8; /* Şeffaflık */
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Hafif gölge */
+            display: flex; /* İçeriği esnek düzenle */
+            justify-content: center; /* Simgeyi ortala */
+            align-items: center; /* Simgeyi dikeyde ortala */
+            padding: 8px 16px;
+        }
+        
+        /* Çıkış butonunun hover efekti */
+        .navbar .logout-button:hover {
+            background-position: 100% 50%;
+            transform: scale(1.05); /* Hoverda buton büyür */
+            opacity: 1; /* Hoverda şeffaflık kalkar */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Hoverda gölgeyi belirginleştir */
+            
+        }   
+    </style>
+
+</head>
+<body>
+  <!-- Üstteki butonlar -->
+  <div class="navbar">
+    <button class="logout-button" onclick="window.location.href='{% url 'cikis' %}'">
+        <i class="fas fa-sign-out-alt"></i> <!-- Çıkış simgesi -->
+    </button>
+    <button onclick="window.location.href='{% url 'arayuz' %}'">Etkinlik Oluştur</button>
+    <button onclick="window.location.href='{% url 'profilim' %}'">Profilim</button>
+    <button onclick="window.location.href='{% url 'katilan_etkinlikler' %}'">Katıldığın Etkinlikler</button>
+    {% if user_id == 1 %}
+    <button onclick="window.location.href='{% url 'yonetim' %}'"> Yönetim</button>
+    {% endif %}
+
+</div>
+
+    <!-- Ana içerik -->
+    <div class="main-container">
+        <!-- Sol tarafta harita -->
+        <div id="map" class="map-container"></div>
+
+        <!-- Sağ taraftaki etkinlik kartları -->
+        <div class="events-container">
+            <h1>Etkinlik Yönetimi</h1>
+            <p>Hoş geldiniz! Etkinliklerinizi buradan yönetebilirsiniz.</p>
+            
+            <!-- Etkinlikler burada listelenecek -->
+            <div class="event-cards">
+                {% for etkinlik in etkinlikler %}
+                <div class="event-card">
+                    <h3>{{ etkinlik.etkinlik_adi }}</h3>
+                    <p><strong>Kategori:</strong> {{ etkinlik.get_kategori_display }}</p>
+                    <p>{{ etkinlik.aciklama }}</p>
+                    <p><strong>Tarih:</strong> {{ etkinlik.tarih }} | <strong>Saat:</strong> {{ etkinlik.saat }}</p>
+                    <p><strong>Konum:</strong> {{ etkinlik.konum }}</p>
+                    <!-- "Nasıl Giderim?" Butonu -->
+            {% if etkinlik.konum_latitude and etkinlik.konum_longitude %}
+            <a 
+                href="https://www.google.com/maps?q={{ etkinlik.konum_latitude }},{{ etkinlik.konum_longitude }}" 
+                target="_blank" 
+                class="directions-button">
+                Nasıl Giderim?
+            </a>
+            {% else %}
+            <p>Konum bilgisi bulunmamaktadır.</p>
+            {% endif %}
+                    <button class="join-button" data-etkinlik-id="{{ etkinlik.id }}" onclick="joinEvent('{{ etkinlik.id }}')">Katıl</button>
+                    {% if user_id == 1 %}
+                    <button class="update-button" onclick="updateEvent('{{ etkinlik.id }}')">Güncelle</button>
+                    <button class="delete-button" onclick="deleteEvent('{{ etkinlik.id }}')">Sil</button>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6Dv2jQqVPHXNSrdd2Tuh52S2Wpqsb3ec&libraries=places"></script>
+    <script>
+        function initMap() {
+            var mapOptions = {
+                center: {lat: 41.0082, lng: 28.9784}, // İstanbul başlangıç koordinatları
+                zoom: 12
+            };
+            var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+        
+            // Etkinliklerin konumları burada işleniyor
+            {% for etkinlik in etkinlikler %}
+            var marker = new google.maps.Marker({
+                position: {lat: {{ etkinlik.konum_latitude }}, lng: {{ etkinlik.konum_longitude }}},
+                map: map,
+                title: "{{ etkinlik.etkinlik_adi }}", // Etkinlik adı
+                icon: {
+                    url: "data:image/svg+xml;utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'><circle cx='12' cy='12' r='10' fill='%23ff0000' stroke='%23ffffff' stroke-width='3' /></svg>", // Şık kırmızı daire
+                    scaledSize: new google.maps.Size(30, 30), // Boyut ayarı
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(15, 15) // İşaretçiyi ortalama
+                }
+            });
+        
+            // Her marker için farklı bir InfoWindow nesnesi oluşturuluyor
+            var infoWindow = new google.maps.InfoWindow();
+        
+            // Marker'a tıklama olayı ekleyelim
+            google.maps.event.addListener(marker, 'click', function() {
+                var content = '<div><strong>' + "{{ etkinlik.etkinlik_adi }}" + '</strong></div>' +
+                              '<div><strong>Tarih:</strong> {{ etkinlik.tarih }}</div>' +
+                              '<div><strong>Açıklama:</strong> {{ etkinlik.aciklama }}</div>' +
+                              '<div><strong>Adres:</strong> {{ etkinlik.konum }}</div>';
+                
+                infoWindow.setContent(content);
+                infoWindow.open(map, marker); // InfoWindow'u marker üzerine aç
+            });
+            {% endfor %}
+        }
+
+        function deleteEvent(eventId) {
+            if (confirm('Bu etkinliği silmek istediğinizden emin misiniz?')) {
+                fetch(`/etkinlik/sil/${eventId}/`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'  // CSRF token'ı şablon üzerinden alıyoruz
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        // Sayfayı yeniden yükle
+                        location.reload(); // Sayfa yeniden yüklenir ve en son haliyle görünür
+                    } else {
+                        alert('Etkinlik silinemedi!');
+                    }
+                })
+                .catch(error => {
+                    console.error('Hata:', error);
+                    alert('Silme işlemi sırasında bir hata oluştu.');
+                });
+            }
+        }
+        
+        
+
+// Etkinlik güncelleme fonksiyonu
+function updateEvent(eventId) {
+    window.location.href = `/etkinlik/guncelle/${eventId}/`;  // Güncelleme sayfasına yönlendir
+}
+
+
+        // Sayfa yüklendiğinde harita başlatma
+        google.maps.event.addDomListener(window, 'load', initMap);
+
+        // Katıl butonuna tıklandığında yapılacak işlem
+        function joinEvent(eventId) {
+            var button = document.querySelector(`button[data-etkinlik-id="${eventId}"]`);
+            button.disabled = true; // Butonu devre dışı bırak
+            button.innerText = "Katıldınız"; // Buton metnini değiştir
+        
+            // AJAX isteği gönder
+            fetch(`/katil/${eventId}/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}' // CSRF token'ını ekle
+                },
+                body: JSON.stringify({
+                    etkinlik_id: eventId
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message); // Kullanıcıya mesajı göster
+                    button.style.display = 'none'; // Katıl butonunu gizle
+                } else {
+                    alert(data.message); // Hata mesajını göster
+                }
+            })
+            .catch(error => {
+                console.error('Hata:', error);
+                alert('Bir hata oluştu!');
+                console.error('Hata mesajı:', error.message); // Hata mesajını kontrol et
+                button.disabled = false; // Hata durumunda butonu tekrar aktif yap
+                button.innerText = "Katıl"; // Buton metnini eski haline getir
+            });
+        }
+        
+        
+    </script>
+
+    <script>
+        // Katıl butonuna tıklama olayını dinle
+        document.querySelectorAll('.join-button').forEach(button => {
+            button.addEventListener('click', function() {
+                var etkinlikId = this.getAttribute('data-etkinlik-id'); // Etkinlik ID'sini al
+    
+                // AJAX isteği gönder
+                fetch(/katil/${etkinlikId}/, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}' // CSRF token'ını ekle
+                    },
+                    body: JSON.stringify({
+                        etkinlik_id: etkinlikId
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Katıl butonunu gizle ve "Katıldınız" mesajını göster
+                        this.style.display = 'none';
+                        var message = this.parentNode.querySelector('.katil-message');
+                        message.style.display = 'inline';
+                    } else {
+                        alert('Bir hata oluştu!');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

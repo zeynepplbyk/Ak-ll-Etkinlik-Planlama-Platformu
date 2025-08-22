@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kullanıcı Girişi</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2>Giriş Yap</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <div>
+                <label for="username">Kullanıcı Adı:</label>
+                <input type="text" name="username" required>
+            </div>
+            <div>
+                <label for="password">Şifre:</label>
+                <input type="password" name="password" required>
+            </div>
+            <button type="submit">Giriş Yap</button>
+        </form>
+        <p>
+            <a href="#">Şifremi unuttum</a>
+        </p>
+        
+        <!-- Yeni kullanıcı kaydı için bağlantı -->
+        <p>Hesabın yok mu? <a href="{% url 'kullanici_kayit' %}">Kaydol</a></p>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>

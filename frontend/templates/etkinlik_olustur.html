@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etkinlik Oluştur</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6Dv2jQqVPHXNSrdd2Tuh52S2Wpqsb3ec&libraries=places"></script>
+
+    <!-- Select2 CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/css/select2.min.css" rel="stylesheet" />
+    <!-- Özel CSS -->
+    <style>
+        /* Container stili */
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 20px auto;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        form input,
+        form textarea,
+        form select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        form select {
+            appearance: none;
+        }
+
+        form button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        form button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Harita boyutu */
+        #map {
+            height: 400px;
+            width: 100%;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <h1>Etkinlik Oluştur</h1>
+        <form id="etkinlik-form" action="{% url 'etkinlik_olustur' %}" method="POST">
+            {% csrf_token %}
+            <label for="etkinlik_adi">Etkinlik Adı:</label>
+            <input type="text" id="etkinlik_adi" name="etkinlik_adi" required>
+        
+            <label for="aciklama">Açıklama:</label>
+            <textarea id="aciklama" name="aciklama" required></textarea>
+        
+            <label for="tarih">Tarih:</label>
+            <input type="date" id="tarih" name="tarih" required>
+        
+            <label for="saat">Saat:</label>
+            <input type="time" id="saat" name="saat" required>
+        
+            <label for="sure">Süre (Dakika cinsinden):</label>
+            <input type="number" id="sure" name="sure" required>
+        
+            <!-- Kategori -->
+            <label for="kategori">Kategori:</label>
+            <select id="kategori" name="kategori" class="select2" required>
+                <option value="spor">Spor</option>
+                <option value="muzik">Müzik</option>
+                <option value="resim">Resim</option>
+                <option value="tiyatro">Tiyatro</option>
+                <option value="sinema">Sinema</option>
+                <option value="dans">Dans</option>
+                <option value="edebiyat">Edebiyat</option>
+                <option value="yemek">Yemek</option>
+                <option value="teknoloji">Teknoloji</option>
+                <option value="seminer">Seminer</option>
+                <option value="konser">Konser</option>
+                <option value="festivaller">Festivaller</option>
+                <option value="konferans">Konferans</option>
+            </select>
+        
+            <!-- Konum -->
+            <label for="konum">Konum (Adres ya da Koordinatlar):</label>
+            <input type="text" id="konum" name="konum" required readonly>
+            <input type="hidden" id="konum_lat_lng" name="konum_lat_lng">
+        
+            <!-- Google Maps -->
+            <div id="map"></div>
+        
+            <button type="submit">Etkinlik Oluştur</button>
+        </form>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Select2 JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/select2.min.js"></script>
+    <!-- Google Maps Script -->
+    <script>
+        let map, marker;
+
+        function initMap() {
+            const initialLocation = { lat: 41.0082, lng: 28.9784 }; // İstanbul başlangıç konumu
+
+            map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 12,
+                center: initialLocation,
+            });
+
+            marker = new google.maps.Marker({
+                position: initialLocation,
+                map: map,
+                draggable: true,
+            });
+
+            const input = document.getElementById("konum");
+            const autocomplete = new google.maps.places.Autocomplete(input);
+            autocomplete.bindTo("bounds", map);
+
+            google.maps.event.addListener(autocomplete, "place_changed", function() {
+                const place = autocomplete.getPlace();
+                if (!place.geometry) return;
+
+                map.setCenter(place.geometry.location);
+                marker.setPosition(place.geometry.location);
+
+                document.getElementById("konum").value = place.formatted_address;
+                const latLng = place.geometry.location;
+                document.getElementById("konum_lat_lng").value = latLng.lat() + ", " + latLng.lng();
+            });
+
+            google.maps.event.addListener(marker, "dragend", function() {
+                const latLng = marker.getPosition();
+                document.getElementById("konum").value = latLng.lat() + ", " + latLng.lng();
+                document.getElementById("konum_lat_lng").value = latLng.lat() + ", " + latLng.lng();
+            });
+        }
+
+        google.maps.event.addDomListener(window, "load", initMap);
+
+        // Select2'yi aktif et
+        $(document).ready(function() {
+            $('.select2').select2({
+                placeholder: "Bir kategori seçin",
+                allowClear: true,
+                width: '100%'
+            });
+        });
+    </script>
+</body>
+</html>

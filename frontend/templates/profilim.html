@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profilim</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        /* Etkinlik kartları */
+        .event-card {
+            border: 1px solid #ddd;
+            border-radius: 8px; /* Daha yuvarlak köşeler */
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: rgba(249, 249, 249, 0.9); /* Şeffaf beyaz arka plan */
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Hafif gölge */
+            transition: transform 0.2s, box-shadow 0.2s; /* Gölge animasyonu */
+        }
+
+        .event-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Hover sırasında daha belirgin gölge */
+        }
+
+        /* Kart başlığı */
+        .event-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        /* Etkinlik açıklaması */
+        .event-card p {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        /* "Nasıl Giderim?" Butonları için Stil */
+        a.directions-button {
+            width: 92%; /* Butonun genişliğini azalt */
+            padding: 10px; /* Yüksekliği kısalt */
+            background: linear-gradient(45deg, #ff6b6b, #f7b7a3, #f7c8ff, #7bdff2);
+            background-size: 400% 400%;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            text-align: center; /* Yazıyı ortala */
+            text-decoration: none; /* Alt çizgiyi kaldır */
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+            animation: gradientAnimation 8s ease infinite;
+            margin: 10px auto; /* Ortalamak için */
+            display: block; /* Blok yaparak ortalamayı sağla */
+        }
+        
+        /* Hover Efekti */
+        a.directions-button:hover {
+            background-color: #218838;
+        }
+        
+        
+        /* Katıl butonu */
+        .event-card .join-button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .event-card .join-button:hover {
+            background-color: #218838;
+        }
+
+        .event-card .katil-message {
+            color: #28a745;
+            font-weight: bold;
+            display: none;
+        }
+
+        .toplam-puan {
+            font-size: 1.5rem; /* Başlık boyutu */
+            font-weight: bold; /* Kalın yazı */
+            text-align: center; /* Ortala */
+            margin-top: 12px; /* Üst boşluk */
+            padding: 8px; /* İç boşluk */
+            border-radius: 12px; /* Köşeleri yuvarla */
+            background: linear-gradient(45deg, #ff6b6b, #f7b7a3, #f7c8ff, #7bdff2); /* Pastel gradient */
+            background-size: 20% 20%; /* Gradient animasyonu için genişletme */
+            animation: gradientAnimation 8s ease infinite; /* Gradient animasyonu */
+            color: #ffffff; /* Beyaz metin */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Hafif gölge */
+        }
+        
+        .puan {
+            font-size: 1.5rem; /* Puan yazı boyutu */
+            font-weight: bold; /* Kalın yazı */
+            color: #fff; /* Beyaz metin */
+        }
+        
+        /* Gradient animasyonu */
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="margin-bottom: 20px;">
+            <button onclick="window.location.href='{% url 'anasayfa' %}'" 
+                style="align-items: center;  gap: 10px; padding: 10px 5px; cursor: pointer;"> 
+                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M8 0a8 8 0 1 0 8 8A8 8 0 0 0 8 0ZM6.354 5.646a.5.5 0 0 1 0 .708L4.707 8l1.647 1.646a.5.5 0 0 1-.708.708l-2-2a.5.5 0 0 1 0-.708l2-2a.5.5 0 0 1 .708 0ZM10 8a.5.5 0 0 1-.5.5H5.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 .5.5Z"/>
+                </svg> 
+                
+            </button>
+        </div>
+        <!-- Profil Bilgileri Kartı -->
+        <div class="toplam-puan">
+            <strong>Toplam Puan:</strong>
+            <span class="puan">{{ toplam_puan }}</span>
+            </div>
+            
+        <div class="profil-karti">
+            <div class="profil-foto">
+                {% if kullanici.profil_fotografi %}
+                    <img src="{{ kullanici.profil_fotografi.url }}" alt="Profil Fotoğrafı">
+                {% else %}
+                    <p>Profil fotoğrafı yok.</p>
+                {% endif %}
+            </div>
+            <h1>Merhaba, {{ kullanici.kullanici_adi }}!</h1>
+            <p>Kullanıcı ID'niz: {{ kullanici.id }}</p>
+            <p>E-posta: {{ kullanici.email }}</p>
+            <p>Ad: {{ kullanici.ad }}</p>
+            <p>Soyad: {{ kullanici.soyad }}</p>
+            <p>Konum: {{ kullanici.konum }}</p>
+            <p>İlgi Alanları: {{ kullanici.ilgi_alanlari }}</p>
+            <p>Doğum Tarihi: {{ kullanici.dogum_tarihi }}</p>
+            <p>Cinsiyet: {{ kullanici.cinsiyet }}</p>
+            <a href="{% url 'profil_guncelle' %}">
+                <button>Profilini Güncelle</button>
+            </a>
+        </div>
+
+        <!-- Etkinlik Önerileri Kartı -->
+        <div class="etkinlik-karti">
+            <h2>Önerilen Etkinlikler</h2>
+            <ul>
+                {% for etkinlik in uygun_etkinlikler %}
+                    <li class="event-card">
+                        <h3>{{ etkinlik.etkinlik_adi }}</h3>
+                        <p>{{ etkinlik.aciklama }}</p>
+                        <p><strong>Tarih:</strong> {{ etkinlik.tarih }}</p>
+                        <p><strong>Saat:</strong> {{ etkinlik.saat }}</p>
+                        <p><strong>Konum:</strong> {{ etkinlik.konum }}</p>
+                        <p><strong>Kategori:</strong> {{ etkinlik.get_kategori_display }}</p>
+                        
+            <!-- "Nasıl Giderim?" Butonu -->
+            {% if etkinlik.konum_latitude and etkinlik.konum_longitude %}
+            <a 
+                href="https://www.google.com/maps?q={{ etkinlik.konum_latitude }},{{ etkinlik.konum_longitude }}" 
+                target="_blank" 
+                class="directions-button">
+                Nasıl Giderim?
+            </a>
+            {% else %}
+            <p>Konum bilgisi bulunmamaktadır.</p>
+            {% endif %}
+            
+                        <!-- Katıl butonu -->
+                        <button class="join-button" data-etkinlik-id="{{ etkinlik.id }}">Katıl</button>
+                        <span class="katil-message" style="display:none;">Katıldınız!</span>
+                    </li>
+                {% empty %}
+                    <li>İlgi alanlarınıza uygun etkinlik bulunamadı.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Katıl butonuna tıklama olayını dinle
+        document.querySelectorAll('.join-button').forEach(button => {
+            button.addEventListener('click', function() {
+                var etkinlikId = this.getAttribute('data-etkinlik-id'); // Etkinlik ID'sini al
+    
+                // AJAX isteği gönder
+                fetch(`/katil/${etkinlikId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}' // CSRF token'ını ekle
+                    },
+                    body: JSON.stringify({
+                        etkinlik_id: etkinlikId
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Katıl butonunu gizle ve "Katıldınız" mesajını göster
+                        this.style.display = 'none';
+                        var message = this.parentNode.querySelector('.katil-message');
+                        message.style.display = 'inline';
+                    } else {
+                        alert('Bir hata oluştu!');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

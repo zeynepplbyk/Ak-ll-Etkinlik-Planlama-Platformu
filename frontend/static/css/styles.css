@@ -1,0 +1,248 @@
+/* Genel Sayfa Stilleri */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(45deg, #ff6b6b, #f7b7a3, #f7c8ff, #7bdff2);
+    background-size: 400% 400%;
+    animation: gradientAnimation 8s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Arka Plan Animasyonu */
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+
+/* Profil fotoğrafı için stil */
+.profil-foto {
+    text-align: center; /* Fotoğrafı ortalar */
+    margin-top: 20px; /* Üstten biraz boşluk bırakır */
+}
+
+.profil-foto img {
+    width: 150px; /* Fotoğrafın genişliğini ayarla */
+    height: 150px; /* Fotoğrafın yüksekliğini ayarla */
+    border-radius: 50%; /* Yuvarlak hale getirmek için */
+    object-fit: cover; /* Fotoğrafın düzgün şekilde sığmasını sağlar */
+    border: 3px solid #ddd; /* Fotoğrafın etrafında hafif bir çerçeve */
+}
+
+/* Profil ve Etkinlikler kartlarını yan yana yerleştirecek Flexbox düzeni */
+.profile-and-events {
+    display: flex;
+    justify-content: space-between;  /* Kartlar arasında boşluk bırak */
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Profil bilgileri kartı */
+.profil-bilgileri {
+    width: 48%;  /* Kartın genişliği */
+    background-color: #f8f8f8;  /* Arka plan rengi */
+    padding: 20px;
+    border-radius: 8px;  /* Yuvarlatılmış köşeler */
+    border: 1px solid #ddd;  /* Sınır rengi */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Hafif gölge efekti */
+}
+
+.profil-bilgileri h1 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+/* Etkinlik önerileri kartı */
+.etkinlik-onerileri {
+    width: 48%;  /* Kartın genişliği */
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.etkinlik-onerileri h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.etkinlik-onerileri ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.etkinlik-onerileri li {
+    margin-bottom: 15px;
+}
+
+.etkinlik-onerileri li h3 {
+    font-size: 20px;
+    color: #333;
+}
+
+.etkinlik-onerileri li p {
+    font-size: 16px;
+    color: #666;
+}
+
+/* Buton stil */
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Cinsiyet Seçimi */
+.cinsiyet-container {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.radio-group label {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 15px;
+    font-size: 16px;
+}
+
+.radio-group input[type="radio"] {
+    margin-right: 5px;
+}
+
+/* Profil Fotoğrafı */
+.profil-fotografi-container label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.profil-fotografi-container input {
+    display: block;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 16px;
+}
+/* Container için stil */
+/* Container için stil */
+.container {
+    background-color: rgba(255, 255, 255, 0.5); /* Daha fazla saydamlık (0.3) */
+    width: 400px;  /* Sabit genişlik */
+    padding: 40px 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hafif gölge */
+    text-align: center;
+    box-sizing: border-box;  /* Padding'i kutu boyutuna dahil eder */
+    transition: transform 0.3s ease-in-out;
+    margin: 20px auto; /* Yukarıdan ve aşağıdan boşluk ekle */
+    max-height: calc(100vh - 40px); /* Kartın ekranın en üst ve altına yapışmaması için */
+    overflow-y: auto; /* İçerik fazla olduğunda kaydırma */
+}
+
+
+
+/* Hover efekti için animasyon */
+.container:hover {
+    transform: translateY(-10px);
+}
+
+/* Başlık için stil */
+h2 {
+    font-family: 'Poppins', sans-serif; /* Daha modern ve okunabilir bir font */
+    font-size: 26px;
+    margin-bottom: 30px;
+    color: #333; /* Başlık rengi */
+    font-weight: bold;
+}
+
+/* Form elemanları için stil */
+input[type="text"], input[type="password"], input[type="email"], input[type="date"], input[type="tel"], select, textarea {
+    width: 100%;  /* Form elemanlarının tamamını kapsasın */
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;  /* İçerik ve padding ile uyumlu */
+    font-size: 16px;
+    transition: border 0.3s ease;
+}
+
+/* Input odaklanınca border rengi değişir */
+input:focus, select:focus, textarea:focus {
+    border: 1px solid #4CAF50;
+}
+
+
+
+
+/* Giriş Yap ve Kaydol butonları */
+button {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(45deg, #ff6b6b, #f7b7a3, #f7c8ff, #7bdff2);
+    background-size: 400% 400%;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-family: 'Poppins', sans-serif; /* Buton yazısı için özelleştirilmiş font */
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+    animation: gradientAnimation 8s ease infinite;
+}
+
+/* Buton hover efekti */
+button:hover {
+    background-position: 100% 50%; /* Hover sırasında gradientin yerini değiştir */
+    transform: scale(1.05); /* Butonu büyüt */
+}
+
+/* Linkler için stil */
+a {
+    color: #007bff; /* Mavi link rengi */
+    text-decoration: none;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif; /* Link yazısı için özelleştirilmiş font */
+}
+
+a:hover {
+    text-decoration: underline; /* Hover efekti */
+}
+
+/* Hata mesajı */
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+/* Alt yazılar */
+p {
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+/* Mobil uyumluluk için */
+@media (max-width: 480px) {
+    .container {
+        width: 90%;  /* Mobilde daha geniş */
+        padding: 20px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+}
