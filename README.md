@@ -81,11 +81,10 @@ python manage.py migrate
 
 # Sunucuyu çalıştır
 python manage.py runserver
-----
+
+```bash
 
 
+## 🎥
+https://github.com/user-attachments/assets/ac2c31a4-9f09-46e4-b164-a26f52c8ae73
 
-
-## 🎥 Demo Video
-
-![Demo Video](https://github.com/user-attachments/assets/f22b4be7-3148-4fec-912a-81ee973a9075)
