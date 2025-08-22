@@ -58,10 +58,10 @@ Proje; **API entegrasyonları, harita ve rota planlama** özellikleriyle kullan�
 - **Puanlar**: Oyunlaştırma için kullanıcı puanları  
 
 
-<video width="600" controls>
-  <source src="https://github.com/zeynepplbyk/Smart-Event-Planning-Platform-Akilli-Etkinlik-Planlama-Platformu/raw/main/kurulum.mp4" type="video/mp4">
-  Tarayıcınız video oynatmayı desteklemiyor.
-</video>
+
+https://github.com/user-attachments/assets/a36ad095-9ac0-447c-a26e-150b18a5dc3e
+
+
 
 
 ---
@@ -90,7 +90,7 @@ python manage.py migrate
 # Sunucuyu çalıştır
 python manage.py runserver
 
-```bash
+
 
 
 
