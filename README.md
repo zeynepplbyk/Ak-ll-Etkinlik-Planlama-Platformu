@@ -1,8 +1,5 @@
 # 🎯 Akıllı Etkinlik Planlama Platformu
 
-<p align="center">
-  <img src="screenshots/logo.png" alt="Proje Logosu" width="200"/>
-</p>
 
 
 
