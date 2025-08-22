@@ -60,11 +60,13 @@ Proje; **API entegrasyonları, harita ve rota planlama** özellikleriyle kullan�
 
 ## ⚙️ Kurulum ve Çalıştırma
 ```bash
-# Depoyu klonla
-git clone https://github.com/kullanici/adiniz.git
+
+# Repoyu klonlayın
+git clone https://github.com/zeynepplbyk/Smart-Event-Planning-Platform-Akilli-Etkinlik-Planlama-Platformu.git
+
 
 # Proje dizinine gir
-cd akilli-etkinlik-platformu
+cd Smart-Event-Planning-Platform-Akilli-Etkinlik-Planlama-Platformu
 
 # Sanal ortam oluştur ve etkinleştir
 python -m venv venv
@@ -81,10 +83,9 @@ python manage.py migrate
 python manage.py runserver
 ----
 
-## Video
 
 
 
+## 🎥 Demo Video
 
-https://github.com/user-attachments/assets/f22b4be7-3148-4fec-912a-81ee973a9075
-
+![Demo Video](https://github.com/user-attachments/assets/f22b4be7-3148-4fec-912a-81ee973a9075)
