@@ -84,7 +84,9 @@ python manage.py runserver
 
 ```bash
 
+---
 
-## 🎥
-https://github.com/user-attachments/assets/ac2c31a4-9f09-46e4-b164-a26f52c8ae73
 
+## 🎥 Demo Video
+
+![Kurulum ve Çalıştırma](https://github.com/user-attachments/assets/ac2c31a4-9f09-46e4-b164-a26f52c8ae73)
