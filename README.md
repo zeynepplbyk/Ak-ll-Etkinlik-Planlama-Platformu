@@ -37,15 +37,6 @@ Proje; **API entegrasyonları, harita ve rota planlama** özellikleriyle kullan�
 
 ---
 
-## 📂 Veritabanı Yapısı
-- **Kullanıcılar**: Kullanıcı adı, şifre, e-posta, profil bilgileri  
-- **Etkinlikler**: İsim, açıklama, tarih, saat, konum  
-- **Katılımcılar**: Kullanıcıların etkinliklerle ilişkisi  
-- **Mesajlar**: Sohbet içerikleri  
-- **Puanlar**: Oyunlaştırma için kullanıcı puanları  
-
----
-
 ## 📊 Sistem Modülleri
 1. **Frontend Geliştirme** – HTML, CSS, JS ile kullanıcı arayüzü  
 2. **Backend Geliştirme** – Django ile kullanıcı ve etkinlik yönetimi  
@@ -84,7 +75,17 @@ python manage.py runserver
 
 ```bash
 
+
+
 ---
+
+## 📂 Veritabanı Yapısı
+- **Kullanıcılar**: Kullanıcı adı, şifre, e-posta, profil bilgileri  
+- **Etkinlikler**: İsim, açıklama, tarih, saat, konum  
+- **Katılımcılar**: Kullanıcıların etkinliklerle ilişkisi  
+- **Mesajlar**: Sohbet içerikleri  
+- **Puanlar**: Oyunlaştırma için kullanıcı puanları  
+
 
 
 ## 🎥 Demo Video
